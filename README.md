@@ -7,7 +7,8 @@ Current features:
 - tracks your mood over time
 - tracks your diet over time
 
-
+Long term vision:
+- When AI buddy collects enough data, eventually it will evolve into a general intelligence and be your goto right hand man in life.
 
 Architecture:
 - Microsoft Bot Framework
