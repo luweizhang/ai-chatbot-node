@@ -6,3 +6,10 @@ Current features:
 - tracks your weight over time
 - tracks your mood over time
 - tracks your diet over time
+
+
+
+Architecture:
+- Microsoft Bot Framework
+- Bot Backend: Python Flask (TensorFlow, Keras, NLTK)
+- MySQL
