@@ -5,3 +5,4 @@ AI buddy is a Facebook chatbot that learns everything about you and provides you
 Current features:
 - tracks your weight over time
 - tracks your mood over time
+- tracks your diet over time
