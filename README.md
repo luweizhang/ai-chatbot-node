@@ -12,5 +12,6 @@ Long term vision:
 
 Architecture:
 - Microsoft Bot Framework
-- Bot Backend: Python Flask (TensorFlow, Keras, NLTK)
+- Python Flask (TensorFlow, Keras, NLTK)
 - MySQL
+- Hosted on Heroku
