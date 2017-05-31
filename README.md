@@ -6,6 +6,8 @@ AI buddy is a Facebook chatbot that learns everything about you and provides you
 - tracks your weight over time
 - tracks your mood and feelings over time
 - tracks your diet over time
+- tracks what you did today
+- tracks your goals
 
 #### Long term vision:
 - When AI buddy collects enough data, eventually it will evolve into a general intelligence.
