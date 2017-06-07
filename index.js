@@ -30,14 +30,16 @@ app.get('/', function (req, res) {
 })
 */
 
-// for facebook verification
-app.get('/webhook/', function (req, res) {
-	if (req.query['hub.verify_token'] === 'penguin') {
-		res.send(req.query['hub.challenge'])
-	} else {
-		res.send('Error, wrong token')
-	}
-})
+
+app.get("/webhook", function (req, res) {
+  if (req.query["hub.verify_token"] === "penguin") {
+    console.log("Verified webhook");
+    res.status(200).send(req.query["hub.challenge"]);
+  } else {
+    console.error("Verification failed. The tokens do not match.");
+    res.sendStatus(403);
+  }
+});
 
 // to post data
 app.post('/webhook/', function (req, res) {
