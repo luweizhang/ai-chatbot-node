@@ -38,16 +38,19 @@ app.post('/webhook/', function (req, res) {
 		let event = req.body.entry[0].messaging[i]
 		let sender = event.sender.id
 		if (event.message && event.message.text) {
-			let text = event.message.text
+			let message = event.message.text
 
 			//generic message
+			/*
 			if (text === 'Generic'){ 
 				console.log("welcome to chatbot")
 				  sendGenericMessage(sender)
 				continue
 			}
+			*/
+			messageHandler(sender, message)
 
-			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
+			//sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
 		}
 		if (event.postback) {
 			let text = JSON.stringify(event.postback)
@@ -133,10 +136,33 @@ function sendGenericMessage(sender) {
 	})
 }
 
+function messageHandler(sender, message) {
+	/*
+	Determine how to handle the message
+	*/
+	let splitmessage = message.toLowerCase().split(' ');
+
+	if (splitmessage.includes('weight') || splitmessage.includes('pounds')) {
+		weightTrackingHander(sender, message)
+	} 
+	else if (splitmessage.includes('Generic')) {
+		genericMessageHandler(sender, message)
+	}
+	else {
+	    sendTextMessage(sender, "Sorry, I could not understand what you were saying...")
+	    sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
+	};
+}
+
+function genericMessageHandler(sender, message) {
+	//generic message
+	console.log("welcome to chatbot")
+  	sendGenericMessage(sender)
+	continue
+}
 
 function weightTrackingHander(sender, message) {
-	//sendTextMessage(sender, "Got it, we have recorded your weight as: " + String(message))
-
+	sendTextMessage(sender, "Got it! Your weight for today has been recorded as: " + String(162))
 }
 
 function moodTrackingHander(sender, message) {
