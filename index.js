@@ -42,7 +42,7 @@ app.post('/webhook/', function (req, res) {
 			let text = event.message.text
 			if (text === 'Generic'){ 
 				console.log("welcome to chatbot")
-				//sendGenericMessage(sender)
+				 sendGenericMessage(sender)
 				continue
 			}
 			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
