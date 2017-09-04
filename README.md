@@ -1,5 +1,7 @@
 # ai-buddy
 
+https://www.facebook.com/AI-Buddy-100263587249118
+
 AI buddy is an AI chatbot that learns everything about you and provides you with analytics and insights about your life.  It is highly intelligent and learns more about you the more you interact with it.  AI Buddy is your goto right hand man.  It is augmented intelligence that will improve your decision making and improve the quality of your life.
 
 Humans are extremely limited in their intelligence.  We have fallible recall memory, logical skills, and decision making skills.  People struggle with alot of very simple and menial tasks and fail to reach their life goals because they do not have enough insight about their lives.  Most of the time, we do not learn from experience because we cannot remember alot of the things that we did in the past.  As a result, we cannot correlate cause and effect and we struggle to improve.  For example, many people struggle to lose weight because they do not know the consequences of their actions.  For one, they don't track their weight so they don't know if they are gaining or losing weight.  Another, they don't track what they eat and don't realize that some of the foods that they eat are contributing to a great deal of weight gain. 
