@@ -158,7 +158,6 @@ function genericMessageHandler(sender, message) {
 	//generic message
 	console.log("welcome to chatbot")
   	sendGenericMessage(sender)
-	continue
 }
 
 function weightTrackingHander(sender, message) {
@@ -166,12 +165,12 @@ function weightTrackingHander(sender, message) {
 }
 
 function moodTrackingHander(sender, message) {
-	//sendTextMessage(sender, "Got it, we have recorded your weight as: " + String(message))
+	sendTextMessage(sender, "Got it! Your mood for today has been recorded as: " + String(7) + " out of 10")
 	
 }
 
 function tasksTrackingHander(sender, message) {
-	//sendTextMessage(sender, "Got it, we have recorded your weight as: " + String(message))
+	sendTextMessage(sender, "Got it! Your accomplishment for today has been recorded")
 	
 }
 
