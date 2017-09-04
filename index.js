@@ -21,7 +21,7 @@ app.get('/', function (req, res) {
 })
 */
 
-
+/* you will need this to setup a webhook with the facebook api */
 app.get("/webhook", function (req, res) {
   if (req.query["hub.verify_token"] === "penguin") {
     console.log("Verified webhook");
@@ -45,7 +45,7 @@ app.post('/webhook/', function (req, res) {
 				//sendGenericMessage(sender)
 				continue
 			}
-			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
 		}
 		if (event.postback) {
 			let text = JSON.stringify(event.postback)
