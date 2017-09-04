@@ -145,12 +145,23 @@ function messageHandler(sender, message) {
 	if (splitmessage.includes('weight') || splitmessage.includes('pounds')) {
 		weightTrackingHander(sender, message)
 	} 
+
+	else if (splitmessage.includes('did' && 'i')) {
+		taskTrackingHander(sender, message)
+	}
+
+	else if (splitmessage.includes('feeling')) {
+		moodTrackingHander(sender, message)
+	}
+
 	else if (splitmessage.includes('Generic')) {
 		genericMessageHandler(sender, message)
 	}
+
 	else {
 	    sendTextMessage(sender, "Sorry, I could not understand what you were saying...")
-	    sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
+	    sendTextMessage(sender, "Note: If you want to accomplish a task ")
+	    //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
 	};
 }
 
@@ -165,26 +176,55 @@ function weightTrackingHander(sender, message) {
 }
 
 function moodTrackingHander(sender, message) {
+	/*
+	Test cases:
+
+	I am feeling very good: Got it! Your mood for today is 10/10
+	I am feeling good: 8/10
+	I am feeling bad: 3/10
+	I am feeling very bad: 1/10
+	
+	I am feeling like a 7: Got it! Your mood for today is a 7/10
+
+
+	*/
 	sendTextMessage(sender, "Got it! Your mood for today has been recorded as: " + String(7) + " out of 10")
 	
 }
 
-function tasksTrackingHander(sender, message) {
+function taskTrackingHander(sender, message) {
 	sendTextMessage(sender, "Got it! Your accomplishment for today has been recorded")
 	
 }
 
 function moodTrackingHander(sender, message) {
-	//sendTextMessage(sender, "Got it, we have recorded your weight as: " + String(message))
+	sendTextMessage(sender, "Got it, we have recorded your mood as: " + String("3 out of 10.") + "I hope you feel better soon!")
+}
+
+function greetingHander(sender, message) {
+	possible_responses = ["Hello!","Greetings!","Hi!","Hola!"];
+
+
+
+	sendTextMessage(sender, "Hello!");
 	
 }
 
-// spin spin sugar
+
+
 app.listen(app.get('port'), function() {
 	console.log('running on port', app.get('port'))
 })
 
-// log your weight
 
+
+/*
+More features to add in the future:
+
+-- Ask some introductory question to learn about the user and collect the data
+-- After facebook authentication, data mine the user!
+-- 
+
+*/
 
 
