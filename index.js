@@ -1,4 +1,3 @@
-
 'use strict'
 
 const express = require('express')
@@ -40,12 +39,15 @@ app.post('/webhook/', function (req, res) {
 		let sender = event.sender.id
 		if (event.message && event.message.text) {
 			let text = event.message.text
+
+			//generic message
 			if (text === 'Generic'){ 
 				console.log("welcome to chatbot")
-				 sendGenericMessage(sender)
+				  sendGenericMessage(sender)
 				continue
 			}
-			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet." + String(sender))
+
+			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
 		}
 		if (event.postback) {
 			let text = JSON.stringify(event.postback)
@@ -131,7 +133,33 @@ function sendGenericMessage(sender) {
 	})
 }
 
+
+function weightTrackingHander(sender, message) {
+	//sendTextMessage(sender, "Got it, we have recorded your weight as: " + String(message))
+
+}
+
+function moodTrackingHander(sender, message) {
+	//sendTextMessage(sender, "Got it, we have recorded your weight as: " + String(message))
+	
+}
+
+function tasksTrackingHander(sender, message) {
+	//sendTextMessage(sender, "Got it, we have recorded your weight as: " + String(message))
+	
+}
+
+function moodTrackingHander(sender, message) {
+	//sendTextMessage(sender, "Got it, we have recorded your weight as: " + String(message))
+	
+}
+
 // spin spin sugar
 app.listen(app.get('port'), function() {
 	console.log('running on port', app.get('port'))
 })
+
+// log your weight
+
+
+
