@@ -28,3 +28,7 @@ In addition, the process of inputing information is extremely tedious.  Because 
 ![alt text](https://cdn-images-1.medium.com/max/800/1*v32n0te309HpnaxCELaKhg.png)
 
  
+ 
+ 
+ ##How to deploy in Heroku:
+ 
