@@ -20,7 +20,8 @@ In addition, the process of inputing information is extremely tedious.  Because 
 
 #### Architecture:
 - Microsoft Bot Framework
-- Node.js (TensorFlow, Keras, NLTK)
+- Node.js (backend request hander)
+- Python Flask (backend ai layer - TensorFlow, Keras, NLTK)
 - PostgreSQL
 - Hosted on Heroku
 
