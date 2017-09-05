@@ -42,5 +42,7 @@ In addition, the process of inputing information is extremely tedious.  Because 
  #### How to deploy locally:
  ```heroku local web```
  
+ #### check env config variables:
+ ```heroku config```
  
  
