@@ -45,4 +45,5 @@ In addition, the process of inputing information is extremely tedious.  Because 
  #### check env config variables:
  ```heroku config```
  
- 
+ ## Useful resources
+ heroku nodejs tutorial: https://devcenter.heroku.com/articles/getting-started-with-nodejs
