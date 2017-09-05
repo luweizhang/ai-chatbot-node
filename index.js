@@ -201,7 +201,7 @@ function taskTrackingHander(sender, message) {
 function greetingHander(sender, message) {
 	let possible_responses = ["Hello!","Greetings!","Hi!","Hola!"];
 	let random_index = Math.floor(Math.random()*4);
-	let mymessage = possible_responses[random_index]
+	let mymessage = possible_responses[random_index];
 	sendTextMessage(sender, mymessage);	
 }
 
@@ -216,7 +216,8 @@ More features to add in the future:
 
 -- Ask some introductory question to learn about the user and collect the data
 -- After facebook authentication, data mine the user!
--- 
+-- connect to wit ai
+-- postgresql connection
 
 */
 
