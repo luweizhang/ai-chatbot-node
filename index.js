@@ -154,11 +154,11 @@ function messageHandler(sender, message) {
 		moodTrackingHander(sender, message)
 	}
 
-	else if (splitmessage.includes('hi' || 'hello')) {
+	else if (splitmessage.includes('hi') || splitmessage.includes('hello')) {
 		greetingHandler(sender, message)
 	}
 
-	else if (splitmessage.includes('Generic')) {
+	else if (splitmessage.includes('generic')) {
 		genericMessageHandler(sender, message)
 	}
 
