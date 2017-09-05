@@ -1,5 +1,5 @@
 # ai-buddy
-<img src="ai-buddy.jpg" height="48" width="48">
+<img src="ai-buddy.jpg" height="500" width="500">
 
 https://www.facebook.com/AI-Buddy-100263587249118
 
