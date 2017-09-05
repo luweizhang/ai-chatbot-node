@@ -34,8 +34,13 @@ In addition, the process of inputing information is extremely tedious.  Because 
  
  
  
+ ## Some useful commands
  
- 
- ## How to deploy to Heroku:
+ #### How to deploy to Heroku:
  ```git push heroku master```
+ 
+ #### How to deploy locally:
+ ```heroku local web```
+ 
+ 
  
