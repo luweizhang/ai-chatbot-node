@@ -36,6 +36,6 @@ In addition, the process of inputing information is extremely tedious.  Because 
  
  
  
- ## How to deploy in Heroku:
+ ## How to deploy to Heroku:
  ```git push heroku master```
  
