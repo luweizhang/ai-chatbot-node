@@ -164,7 +164,7 @@ function messageHandler(sender, message) {
 
 	else {
 	    sendTextMessage(sender, "Sorry, I could not understand what you were saying...");
-	    setTimeout(sendTextMessage(sender, "Note: If you want to record an accomplishment, please prefix your message with \"I did\""),200);
+	    sendTextMessage(sender, "Note: If you want to record an accomplishment, please prefix your message with \"I did\"");
 	    //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
 	};
 }
