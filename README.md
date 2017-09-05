@@ -22,7 +22,7 @@ In addition, the process of inputing information is extremely tedious.  Because 
 - When AI buddy collects enough data, eventually it will evolve into a powerful augmented intelligence.   It will know everything about you and leverage this information to assist you in your daily life.  
 
 #### Architecture:
-- Microsoft Bot Framework
+- wit.ai
 - Node.js (backend request hander)
 - Python Flask (backend ai layer - TensorFlow, Keras, NLTK)
 - PostgreSQL
