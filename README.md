@@ -1,6 +1,5 @@
 # ai-buddy
-
-![alt text](ai-buddy.jpg)
+<img src="ai-buddy.jpg" height="48" width="48">
 
 https://www.facebook.com/AI-Buddy-100263587249118
 
