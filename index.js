@@ -49,8 +49,8 @@ app.post('/webhook/', function (req, res) {
 			}
 			*/
 			messageHandler(sender, message)
-
 			//sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
+
 		}
 		if (event.postback) {
 			let text = JSON.stringify(event.postback)
@@ -150,11 +150,11 @@ function messageHandler(sender, message) {
 		taskTrackingHandler(sender, message)
 	}
 
-	else if (splitmessage.includes('feeling')) {
+	else if (splitmessage.includes('feeling') && splitmessage.includes('mood')) {
 		moodTrackingHandler(sender, message)
 	}
 
-	else if (splitmessage.includes('hi') || splitmessage.includes('hello')) {
+	else if (splitmessage.includes('hi') || splitmessage.includes('hello') || splitmessage.includes('whats up') || splitmessage.includes('whats up')) {
 		greetingHandler(sender, message)
 	}
 
@@ -164,7 +164,7 @@ function messageHandler(sender, message) {
 
 	else {
 	    sendTextMessage(sender, "Sorry, I could not understand what you were saying...");
-	    sendTextMessage(sender, "Note: If you want to record an accomplishment, please prefix your message with \"I did\"");
+	    sendTextMessage(sender, "Note: Please type \"help\" to learn how to interact with me!");
 	    //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
 	};
 }
@@ -195,7 +195,6 @@ function moodTrackingHandler(sender, message) {
 
 function taskTrackingHandler(sender, message) {
 	sendTextMessage(sender, "Got it! Your accomplishment for today has been recorded")
-	
 }
 
 function greetingHandler(sender, message) {
@@ -205,19 +204,40 @@ function greetingHandler(sender, message) {
 	sendTextMessage(sender, mymessage);	
 }
 
+function helpHandler(sender, message) {
+	sendTextMessage(sender, "Here is some help!");	
+}
+
 app.listen(app.get('port'), function() {
 	console.log('running on port', app.get('port'))
 })
 
+/* immediate todo list
+-- Add postgresql conection
+-- submit app for review 
+
+*/
 
 
 /*
 More features to add in the future:
 
--- Ask some introductory question to learn about the user and collect the data
+-- Ask some introductory question to learn about the user and collect some initial data
 -- After facebook authentication, data mine the user!
 -- connect to wit ai
 -- postgresql connection
+
+-- create a web portal to display all the analytics that have been gathered
+
+-- in addition to the web portal, also send vizualizations through the chat itself.  For example, after recording the weight, 
+-- display a graph of the weight fluctuations over the last two months.
+
+*/
+
+/* future vision
+-- After learning about the user, serve ads and do affiliate marketing.
+
+
 
 */
 
