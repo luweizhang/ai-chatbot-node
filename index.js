@@ -146,7 +146,7 @@ function messageHandler(sender, message) {
 		weightTrackingHander(sender, message)
 	} 
 
-	else if (splitmessage.includes('did' && 'i')) {
+	else if (splitmessage.includes('i') && splitmessage.includes('did')) {
 		taskTrackingHander(sender, message)
 	}
 
@@ -154,13 +154,17 @@ function messageHandler(sender, message) {
 		moodTrackingHander(sender, message)
 	}
 
+	else if (splitmessage.includes('hi' || 'hello')) {
+		greetingHandler(sender, message)
+	}
+
 	else if (splitmessage.includes('Generic')) {
 		genericMessageHandler(sender, message)
 	}
 
 	else {
-	    sendTextMessage(sender, "Sorry, I could not understand what you were saying...")
-	    sendTextMessage(sender, "Note: If you want to accomplish a task ")
+	    sendTextMessage(sender, "Sorry, I could not understand what you were saying...");
+	    setTimeout(sendTextMessage(sender, "Note: If you want to record an accomplishment, please prefix your message with \"I did\""),200);
 	    //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
 	};
 }
@@ -185,11 +189,8 @@ function moodTrackingHander(sender, message) {
 	I am feeling very bad: 1/10
 	
 	I am feeling like a 7: Got it! Your mood for today is a 7/10
-
-
 	*/
-	sendTextMessage(sender, "Got it! Your mood for today has been recorded as: " + String(7) + " out of 10")
-	
+	sendTextMessage(sender, "Got it, we have recorded your mood as: " + String("3 out of 10.") + "I hope you feel better soon!")
 }
 
 function taskTrackingHander(sender, message) {
@@ -197,20 +198,12 @@ function taskTrackingHander(sender, message) {
 	
 }
 
-function moodTrackingHander(sender, message) {
-	sendTextMessage(sender, "Got it, we have recorded your mood as: " + String("3 out of 10.") + "I hope you feel better soon!")
-}
-
 function greetingHander(sender, message) {
-	possible_responses = ["Hello!","Greetings!","Hi!","Hola!"];
-
-
-
-	sendTextMessage(sender, "Hello!");
-	
+	let possible_responses = ["Hello!","Greetings!","Hi!","Hola!"];
+	let random_index = Math.floor(Math.random()*4);
+	let mymessage = possible_responses[random_index]
+	sendTextMessage(sender, mymessage);	
 }
-
-
 
 app.listen(app.get('port'), function() {
 	console.log('running on port', app.get('port'))
