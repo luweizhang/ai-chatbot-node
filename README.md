@@ -1,5 +1,7 @@
 # ai-buddy
 
+![alt text](ai-buddy.jpg)
+
 https://www.facebook.com/AI-Buddy-100263587249118
 
 AI buddy is an AI chatbot that learns everything about you and provides you with analytics and insights about your life.  It is highly intelligent and learns more about you the more you interact with it.  AI Buddy is your goto right hand man.  It is augmented intelligence that will improve your decision making and improve the quality of your life.
