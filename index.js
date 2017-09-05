@@ -143,15 +143,15 @@ function messageHandler(sender, message) {
 	let splitmessage = message.toLowerCase().split(' ');
 
 	if (splitmessage.includes('weight') || splitmessage.includes('pounds')) {
-		weightTrackingHander(sender, message)
+		weightTrackingHandler(sender, message)
 	} 
 
 	else if (splitmessage.includes('i') && splitmessage.includes('did')) {
-		taskTrackingHander(sender, message)
+		taskTrackingHandler(sender, message)
 	}
 
 	else if (splitmessage.includes('feeling')) {
-		moodTrackingHander(sender, message)
+		moodTrackingHandler(sender, message)
 	}
 
 	else if (splitmessage.includes('hi') || splitmessage.includes('hello')) {
@@ -175,11 +175,11 @@ function genericMessageHandler(sender, message) {
   	sendGenericMessage(sender)
 }
 
-function weightTrackingHander(sender, message) {
+function weightTrackingHandler(sender, message) {
 	sendTextMessage(sender, "Got it! Your weight for today has been recorded as: " + String(162))
 }
 
-function moodTrackingHander(sender, message) {
+function moodTrackingHandler(sender, message) {
 	/*
 	Test cases:
 
@@ -193,12 +193,12 @@ function moodTrackingHander(sender, message) {
 	sendTextMessage(sender, "Got it, we have recorded your mood as: " + String("3 out of 10.") + "I hope you feel better soon!")
 }
 
-function taskTrackingHander(sender, message) {
+function taskTrackingHandler(sender, message) {
 	sendTextMessage(sender, "Got it! Your accomplishment for today has been recorded")
 	
 }
 
-function greetingHander(sender, message) {
+function greetingHandler(sender, message) {
 	let possible_responses = ["Hello!","Greetings!","Hi!","Hola!"];
 	let random_index = Math.floor(Math.random()*4);
 	let mymessage = possible_responses[random_index];
