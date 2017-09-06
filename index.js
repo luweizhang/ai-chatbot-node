@@ -215,6 +215,10 @@ function genericMessageHandler(sender, message) {
 
 function weightTrackingHandler(sender, message) {
 	let weight = numberParser(message)
+	if (weight == null) {
+		sendTextMessage(send, "Please enter a weight between 0 and 10, i.e my mood is X out of 10")
+		return
+	}
 	sendTextMessage(sender, "Got it! Your weight for today has been recorded as: " + String(weight))
 	dbStoreWeight(sender, weight);
 }
@@ -232,6 +236,11 @@ function moodTrackingHandler(sender, message) {
 	*/
 
 	let mood = parseInt(numberParser(message));
+	if (mood == null) {
+		sendTextMessage(send, "Please enter a mood number between 0 and 10, i.e my mood is X out of 10")
+		return
+	}
+
 	if (mood >= 0 && mood <= 4) {
 		message_end = "I hope you feel better soon!"
 	} else if (mood > 4 && mood <= 7) {
