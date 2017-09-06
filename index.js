@@ -82,7 +82,7 @@ app.post('/db/weight', (req, res, next) => {
       return res.status(500).json({success: false, data: err});
     }
     // SQL Query > Insert Data
-    client.query('INSERT INTO weight (user_id, weight, metric, message_time) values($1, $2, $3, current_timestamp)',
+    client.query('INSERT INTO weight (user_id, weight, metric, message_time) values($1, $2, $3, current_timestamp);',
     [data.user_id, data.weight, data.metric]);
     /*
     // SQL Query > Select Data
@@ -98,7 +98,7 @@ app.post('/db/weight', (req, res, next) => {
     });
 	*/
 	done();
-	return "success";
+	return res.status(200).json({success: true, , message: 'inserted weight record'});;
   });
 });
 
