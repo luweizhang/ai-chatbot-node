@@ -42,16 +42,8 @@ app.post('/webhook/', function (req, res) {
 		let sender = event.sender.id
 		if (event.message && event.message.text) {
 			let message = event.message.text
-
-			//generic message
-			/*
-			if (text === 'Generic'){ 
-				console.log("welcome to chatbot")
-				  sendGenericMessage(sender)
-				continue
-			}
-			*/
 			messageHandler(sender, message)
+
 			//sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
 
 		}
@@ -63,6 +55,23 @@ app.post('/webhook/', function (req, res) {
 	}
 	res.sendStatus(200)
 })
+
+//database connection
+app.get('/db', function (request, response) {
+  
+  var pool = new pg.Pool()
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query('SELECT * FROM test_table', function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { response.render('pages/db', {results: result.rows} ); }
+    });
+  });
+
+  pool.end();
+});
 
 
 // recommended to inject access tokens as environmental variables, e.g.
@@ -245,16 +254,9 @@ More features to add in the future:
 
 */
 
-app.get('/db', function (request, response) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query('SELECT * FROM test_table', function(err, result) {
-      done();
-      if (err)
-       { console.error(err); response.send("Error " + err); }
-      else
-       { response.render('pages/db', {results: result.rows} ); }
-    });
-  });
-});
+/*
+Other ideas, detect your mood.
+*/
+
 
 
