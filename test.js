@@ -1,4 +1,5 @@
 var numberPattern = /\d+/g;
+console.log(numberPattern)
 console.log('I am dfdfdf pounds'.match( numberPattern ));
 
 

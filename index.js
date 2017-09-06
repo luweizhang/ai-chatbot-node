@@ -305,10 +305,11 @@ function dbStoreWeight(sender, weight) {
 
 function numberParser(message) {
 	let numberPattern = /\d+/g;
-	if (numberPattern == null) {
+	let messageMatch = message.match( numberPattern )
+	if (messageMatch == null) {
 		return null
 	} else {
-		return message.match( numberPattern )[0]
+		return messageMatch[0]
 	}
 	
 }
