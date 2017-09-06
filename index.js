@@ -185,7 +185,7 @@ function messageHandler(sender, message) {
 		taskTrackingHandler(sender, message)
 	}
 
-	else if (splitmessage.includes('feeling') && splitmessage.includes('mood')) {
+	else if (splitmessage.includes('feeling') || splitmessage.includes('mood')) {
 		moodTrackingHandler(sender, message)
 	}
 
@@ -209,13 +209,12 @@ function messageHandler(sender, message) {
 }
 
 function genericMessageHandler(sender, message) {
-	//generic message
 	console.log("welcome to chatbot")
   	sendGenericMessage(sender)
 }
 
 function weightTrackingHandler(sender, message) {
-	let weight = weightParser(message)
+	let weight = numberParser(message)
 	sendTextMessage(sender, "Got it! Your weight for today has been recorded as: " + String(weight))
 	dbStoreWeight(sender, weight);
 }
@@ -231,7 +230,19 @@ function moodTrackingHandler(sender, message) {
 	
 	I am feeling like a 7: Got it! Your mood for today is a 7/10
 	*/
-	sendTextMessage(sender, "Got it, we have recorded your mood as: " + String("3 out of 10.") + "I hope you feel better soon!")
+
+	let mood = parseInt(numberParser(message));
+	if (mood >= 0 && mood <= 4) {
+		message_end = "I hope you feel better soon!"
+	} else if (mood > 4 && mood <= 7) {
+		message_end = ""
+	} else if (mood > 7 && mood <= 10) {
+		message_end = "I'm glad you are feeling great today!"
+	} else {
+		sendTextMessage(send, "Please enter a mood number between 0 and 10, i.e my mood is X out of 10")
+		return
+	}
+	sendTextMessage(sender, "Got it, we have recorded your mood as: " + String(mood) + message_end)
 }
 
 function taskTrackingHandler(sender, message) {
@@ -246,7 +257,7 @@ function greetingHandler(sender, message) {
 }
 
 function helpHandler(sender, message) {
-	let possible_responses = ["Hello!",
+	let possible_responses = [
 	"Type \"My weight is X \" to record your weight for today",
 	"Type \"My mood is X out of 10, to record your mood for today",
 	"Type \" I did X\" to record your accomplishments for today"
@@ -283,7 +294,7 @@ function dbStoreWeight(sender, weight) {
 	  });
 };
 
-function weightParser(message) {
+function numberParser(message) {
 	let numberPattern = /\d+/g;
 	return message.match( numberPattern )[0]
 }
