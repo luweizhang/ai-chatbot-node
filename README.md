@@ -1,4 +1,4 @@
-# ai-buddy
+# ai-buddy (in development)
 <img src="ai-buddy.jpg" height="250" width="250">
 
 https://www.facebook.com/AI-Buddy-100263587249118
