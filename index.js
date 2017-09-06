@@ -69,7 +69,7 @@ app.post('/db/weight', (req, res, next) => {
   const results = [];
   // Grab data from http request
   // const data = {text: req.body.text, complete: false};
-  const data = {user_id: req.body.user_id, weight: req.body.weight, metric: 'lbs'};
+  const data = {user_id: req.body.user_id, weight: req.body.weight, metric: req.body.metric};
   // Get a Postgres client from the connection pool
   pg.connect(connectionString, (err, client, done) => {
     // Handle connection errors
@@ -79,7 +79,7 @@ app.post('/db/weight', (req, res, next) => {
       return res.status(500).json({success: false, data: err});
     }
     // SQL Query > Insert Data
-    client.query('INSERT INTO weight values($1, $2, $3, current_timestamp)',
+    client.query('INSERT INTO weight (user_id, weight, metric, message_time) values($1, $2, $3, current_timestamp)',
     [data.user_id, data.weight, data.metric]);
     /*
     // SQL Query > Select Data
@@ -251,8 +251,8 @@ function dbStoreWeight(params) {
 
 	var post_data = querystring.stringify({
       'user_id' : '123',
-      'weight': 'json',
-      'metric': 'compiled_code'
+      'weight': 123,
+      'metric': 'lbs'
   	});
 
   	request.post(
@@ -265,10 +265,6 @@ function dbStoreWeight(params) {
     }
 	);
 }
-
-
-
-
 
 
 
