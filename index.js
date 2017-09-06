@@ -216,7 +216,7 @@ function genericMessageHandler(sender, message) {
 function weightTrackingHandler(sender, message) {
 	let weight = numberParser(message)
 	if (weight == null) {
-		sendTextMessage(sender, "Please enter a weight between 0 and 10, i.e my mood is X out of 10")
+		sendTextMessage(sender, "Please enter a weight, i.e my weight is X")
 		return
 	}
 	sendTextMessage(sender, "Got it! Your weight for today has been recorded as: " + String(weight))
@@ -242,11 +242,11 @@ function moodTrackingHandler(sender, message) {
 	}
 
 	if (mood >= 0 && mood <= 4) {
-		message_end = "I hope you feel better soon!"
+		let message_end = "I hope you feel better soon!"
 	} else if (mood > 4 && mood <= 7) {
-		message_end = ""
+		let message_end = ""
 	} else if (mood > 7 && mood <= 10) {
-		message_end = "I'm glad you are feeling great today!"
+		let message_end = "I'm glad you are feeling great today!"
 	} else {
 		sendTextMessage(sender, "Please enter a mood number between 0 and 10, i.e my mood is X out of 10")
 		return
@@ -335,6 +335,8 @@ More features to add in the future:
 
 -- connect to wit ai to do general NLP (don't need to do all the work myself)
 
+
+
 */
 
 /* future vision
@@ -345,6 +347,10 @@ More features to add in the future:
 
 /*
 Other ideas, detect your mood.
+
+-- need some sort of ability to record the message context,
+ to enable more complex complex conversations
+ for example -> "how are you?" -> good, and you? -> good! -> "thats good to hear!"
 */
 
 
