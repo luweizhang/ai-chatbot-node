@@ -241,12 +241,13 @@ function moodTrackingHandler(sender, message) {
 		return
 	}
 
+	let message_end
 	if (mood >= 0 && mood <= 4) {
-		let message_end = "I hope you feel better soon!"
+		message_end = "I hope you feel better soon!"
 	} else if (mood > 4 && mood <= 7) {
-		let message_end = ""
+		message_end = ""
 	} else if (mood > 7 && mood <= 10) {
-		let message_end = "I'm glad you are feeling great today!"
+		message_end = "I'm glad you are feeling great today!"
 	} else {
 		sendTextMessage(sender, "Please enter a mood number between 0 and 10, i.e my mood is X out of 10")
 		return
