@@ -98,6 +98,7 @@ app.post('/db/weight', (req, res, next) => {
     });
 	*/
 	done();
+	return "success";
   });
 });
 
