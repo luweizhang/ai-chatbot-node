@@ -1,20 +1,8 @@
 --CREATE TABLE STATEMENTS
 
-/*
-Database schema design.
-
-users table:
-description: table of all the users
-schema: user_id, name, location, age
-additional notes: we can collect this data either through facebook API or through some other means
-
-messages table:
-descr: history of all the conversations from all the users
-schema: user_id, message, timestamp, bot (0 or 1, what is the user)
-*/
-
+--table of all the users, can collect more data via facebook API
 CREATE TABLE users (
-   id            	INT PRIMARY KEY NOT NULL,
+   id             INT PRIMARY KEY NOT NULL,
    name           TEXT,
    age            INT,
    address        CHAR(200),
@@ -22,15 +10,21 @@ CREATE TABLE users (
 );
 
 CREATE TABLE messages (
-   user_id INT PRIMARY KEY NOT NULL,
+   id SERIAL PRIMARY KEY NOT NULL,
+   user_id INT NOT NULL,
    message TEXT,
-   message_time timestamp NOT NULL,
-   bot boolean NOT NULL
+   message_time timestamptz  NOT NULL,
+   bot boolean NOT NULL -- 1 or 0 whether it is a bot or not
 );
 
 CREATE TABLE weight (
-   user_id INT PRIMARY KEY NOT NULL,
+   id SERIAL PRIMARY KEY NOT NULL, --serial auto increments
+   user_id INT NOT NULL,
    weight        real  NOT NULL ,
    metric            varchar(10)     NOT NULL, --pounds or kg
-   message_time timestamp NOT NULL,
+   message_time timestamptz  NOT NULL
 );
+
+INSERT INTO weight VALUES(sender, weight, metric, message_time);
+INSERT INTO weight (user_id, weight, metric, message_time) VALUES(123, 128, 'lbs', current_timestamp);
+

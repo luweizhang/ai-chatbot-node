@@ -1,15 +1,14 @@
 'use strict'
-
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const pg = require('pg'); //postgresql
+const querystring = require('querystring');
 
 const app = express()
 
-const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
-
-
+//config variables
+const connectionString = process.env.DATABASE_URL // || 'postgres://localhost:5432/todo';
 
 app.set('port', (process.env.PORT || 5000))
 app.use(bodyParser.urlencoded({extended: false}))
@@ -21,7 +20,6 @@ app.use(bodyParser.json())
 app.get('/', function (req, res) {
 	res.send('566348112')
 })
-
 
 /* you will need this to setup a webhook with the facebook api */
 app.get("/webhook", function (req, res) {
@@ -53,9 +51,9 @@ app.post('/webhook/', function (req, res) {
 	res.sendStatus(200)
 })
 
-//database connection
+//sample database request
 app.get('/db', function (request, response) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+  pg.connect(connectionString, function(err, client, done) {
     client.query('SELECT * FROM test_table', function(err, result) {
       done();
       if (err)
@@ -66,15 +64,43 @@ app.get('/db', function (request, response) {
   });
 });
 
+//store the weight
+router.post('/db/weight', (req, res, next) => {
+  const results = [];
+  // Grab data from http request
+  // const data = {text: req.body.text, complete: false};
+  const data = {user_id: req.body.user_id, weight: req.body.weight, metric: 'lbs'};
+  // Get a Postgres client from the connection pool
+  pg.connect(connectionString, (err, client, done) => {
+    // Handle connection errors
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+    // SQL Query > Insert Data
+    client.query('INSERT INTO weight values($1, $2, $3, current_timestamp)',
+    [data.user_id, data.weight, data.metric]);
+    /*
+    // SQL Query > Select Data
+    const query = client.query('SELECT * FROM items ORDER BY id ASC');
+    // Stream results back one row at a time
+    query.on('row', (row) => {
+      results.push(row);
+    });`
+    // After all data is returned, close connection and return results
+    query.on('end', () => {
+      done();
+      return res.json(results);
+    });
+	*/
+	done();
+  });
+});
 
-// recommended to inject access tokens as environmental variables, e.g.
-// const token = process.env.FB_PAGE_ACCESS_TOKEN
-// const token = "<FB_PAGE_ACCESS_TOKEN>"
 const token = process.env.token
-
 function sendTextMessage(sender, text) {
 	let messageData = { text:text }
-	
 	request({
 		url: 'https://graph.facebook.com/v2.6/me/messages',
 		qs: {access_token:token},
@@ -203,7 +229,7 @@ function taskTrackingHandler(sender, message) {
 }
 
 function greetingHandler(sender, message) {
-	let possible_responses = ["Hello!","Greetings!","Hi!","Hola!","Hey!"];
+	let possible_responses = ["Hello!","Greetings!","Hi!","Hola!","Hey!","Bonjour!"];
 	let random_index = Math.floor(Math.random()*4);
 	let mymessage = possible_responses[random_index];
 	sendTextMessage(sender, mymessage);	
@@ -217,10 +243,39 @@ app.listen(app.get('port'), function() {
 	console.log('running on port', app.get('port'))
 })
 
+
+//db request function
+
+function dbStoreWeight(params) {
+
+	var post_data = querystring.stringify({
+      'user_id' : 'ADVANCED_OPTIMIZATIONS',
+      'weight': 'json',
+      'metric': 'compiled_code'
+  	});
+
+  	request.post(
+    'http://www.yoursite.com/formpage',
+    { json: { key: 'value' } },
+    function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body)
+        }
+    }
+	);
+}
+
+
+
+
+
+
+
+
+
 /* immediate todo list
 -- Add postgresql conection
 -- submit app for review 
-
 */
 
 
