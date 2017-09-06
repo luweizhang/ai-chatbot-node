@@ -193,6 +193,10 @@ function messageHandler(sender, message) {
 		greetingHandler(sender, message)
 	}
 
+	else if (splitmessage.includes('help') || splitmessage.includes('tip') || splitmessage.includes('tips')) {
+		helpHandler(sender, message)
+	}
+
 	else if (splitmessage.includes('generic')) {
 		genericMessageHandler(sender, message)
 	}
@@ -236,13 +240,21 @@ function taskTrackingHandler(sender, message) {
 
 function greetingHandler(sender, message) {
 	let possible_responses = ["Hello!","Greetings!","Hi!","Hola!","Hey!","Bonjour!"];
-	let random_index = Math.floor(Math.random()*4);
+	let random_index = Math.floor(Math.random()*(possible_responses.length));
 	let mymessage = possible_responses[random_index];
 	sendTextMessage(sender, mymessage);	
 }
 
 function helpHandler(sender, message) {
-	sendTextMessage(sender, "Here is some help!");	
+	let possible_responses = ["Hello!",
+	"Type \"My weight is X \" to record your weight for today",
+	"Type \"My mood is X out of 10, to record your mood for today",
+	"Type \" I did X\" to record your accomplishments for today"
+	];
+
+	let random_index = Math.floor(Math.random()*(possible_responses.length));
+	let mymessage = possible_responses[random_index];
+	sendTextMessage(sender, "Heres a tip: " + mymessage);	
 }
 
 app.listen(app.get('port'), function() {
