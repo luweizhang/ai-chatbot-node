@@ -250,8 +250,8 @@ app.listen(app.get('port'), function() {
 
 
 //db request function
-
 function dbStoreWeight(params) {
+	console.log("attempting to post")	
 
 	// Set the headers
 	var headers = {
@@ -272,6 +272,8 @@ function dbStoreWeight(params) {
 	    if (!error && response.statusCode == 200) {
 	        // Print out the response body
 	        console.log(body)
+	    } else {
+	    	console.log(error)
 	    }
 	})
 }
