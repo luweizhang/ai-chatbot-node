@@ -69,7 +69,10 @@ app.post('/db/weight', (req, res, next) => {
   const results = [];
   // Grab data from http request
   // const data = {text: req.body.text, complete: false};
-  const data = {user_id: req.body.user_id, weight: req.body.weight, metric: req.body.metric};
+
+  console.log(req.body);
+  const data = {user_id: req.body.user_id || '123' , weight: req.body.weight || 123, metric: req.body.metric || 'lbs'};
+  console.log(data);
   // Get a Postgres client from the connection pool
   pg.connect(connectionString, (err, client, done) => {
     // Handle connection errors
