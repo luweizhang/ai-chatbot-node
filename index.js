@@ -257,7 +257,11 @@ function dbStoreWeight(params) {
 
   	request.post(
     'db/weight',
-    post_data,
+    {
+      'user_id' : '123',
+      'weight': 123,
+      'metric': 'lbs'
+  	},
     function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body)
