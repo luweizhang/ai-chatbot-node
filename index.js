@@ -98,7 +98,7 @@ app.post('/db/weight', (req, res, next) => {
     });
 	*/
 	done();
-	return res.status(200).json({success: true, , message: 'inserted weight record'});;
+	return res.status(200).json({success: true,message: 'inserted weight record'})
   });
 });
 
@@ -260,7 +260,7 @@ function dbStoreWeight(params) {
   	});
 
   	request.post(
-    'db/weight',
+    '/db/weight',
     {
       'user_id' : '123',
       'weight': 123,
