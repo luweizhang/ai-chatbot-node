@@ -7,21 +7,21 @@ const pg = require('pg'); //postgresql
 
 const app = express()
 
+const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
+
 
 
 app.set('port', (process.env.PORT || 5000))
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
 
 // parse application/json
 app.use(bodyParser.json())
 
-// index
-/*
+//index
 app.get('/', function (req, res) {
 	res.send('566348112')
 })
-*/
+
 
 /* you will need this to setup a webhook with the facebook api */
 app.get("/webhook", function (req, res) {
@@ -61,7 +61,7 @@ app.get('/db', function (request, response) {
       if (err)
        { console.error(err); response.send("Error " + err); }
       else
-       { response.render('pages/db', {results: result.rows} ); }
+       { response.send({results: result.rows} ); }
     });
   });
 });

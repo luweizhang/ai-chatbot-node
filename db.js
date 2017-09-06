@@ -1,15 +1,10 @@
-//postgresql connection
-var connectionString = process.env.DATABASE_URL
 
-//postgres://ytlimopprhbhyc:3dbba39aae816e59dcb13022ace6bd2400236df5cde5cab7f3cca88b06cf8f64@ec2-107-22-211-182.compute-1.amazonaws.com:5432/d737pgn8g441di
+const pg = require('pg');
+const connectionString = process.env.DATABASE_URL;
 
-pg.connect(connectionString, function(err, client, done) {
-   client.query('SELECT * FROM your_table', function(err, result) {
-      done();
-      if(err) return console.error(err);
-      console.log(result.rows);
-   });
-});
+const client = new pg.Client(connectionString);
+client.connect();
+const query = client.query(
+  'CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)');
+query.on('end', () => { client.end(); });
 
-
-//queries to interact with the db
