@@ -211,8 +211,9 @@ function genericMessageHandler(sender, message) {
 }
 
 function weightTrackingHandler(sender, message) {
-	sendTextMessage(sender, "Got it! Your weight for today has been recorded as: " + String(162))
-	dbStoreWeight('hello');
+	let weight = weightParser(message)
+	sendTextMessage(sender, "Got it! Your weight for today has been recorded as: " + String(weight))
+	dbStoreWeight(sender, weight);
 }
 
 function moodTrackingHandler(sender, message) {
@@ -250,9 +251,9 @@ app.listen(app.get('port'), function() {
 
 
 //db request function
-function dbStoreWeight(params) {
+function dbStoreWeight(sender, weight) {
 	console.log("attempting to post")	
-	  const data = {user_id: '123' , weight: 123, metric: 'lbs'};
+	  const data = {user_id: sender , weight: weight, metric: 'lbs'};
 	  console.log(data);
 	  // Get a Postgres client from the connection pool
 	  pg.connect(connectionString, (err, client, done) => {
@@ -270,9 +271,10 @@ function dbStoreWeight(params) {
 	  });
 };
 
-
-
-
+function weightParser(message) {
+	let numberPattern = /\d+/g;
+	return message.match( numberPattern )[0]
+}
 
 /* immediate todo list
 -- Add postgresql conection
