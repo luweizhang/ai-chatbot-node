@@ -253,30 +253,36 @@ app.listen(app.get('port'), function() {
 function dbStoreWeight(params) {
 	console.log("attempting to post")	
 
-	// Set the headers
-	var headers = {
-	    'User-Agent':       'Super Agent/0.0.1',
-	    'Content-Type':     'application/x-www-form-urlencoded'
-	}
-
-	// Configure the request
-	var options = {
-	    url: '/db/weight',
-	    method: 'POST',
-	    headers: headers,
-	    form: {user_id: '123' , weight: 123, metric: 'lbs'}
-	}
-
-	// Start the request
-	request(options, function (error, response, body) {
-	    if (!error && response.statusCode == 200) {
-	        // Print out the response body
-	        console.log(body)
-	    } else {
-	    	console.log(error)
+	  const data = {user_id: '123' , weight: 123, metric: 'lbs'};
+	  console.log(data);
+	  // Get a Postgres client from the connection pool
+	  pg.connect(connectionString, (err, client, done) => {
+	    // Handle connection errors
+	    if(err) {
+	      done();
+	      console.log(err);
+	      return res.status(500).json({success: false, data: err});
 	    }
-	})
-}
+	    // SQL Query > Insert Data
+	    client.query('INSERT INTO weight (user_id, weight, metric, message_time) values($1, $2, $3, current_timestamp);',
+	    [data.user_id, data.weight, data.metric]);
+	    /*
+	    // SQL Query > Select Data
+	    const query = client.query('SELECT * FROM items ORDER BY id ASC');
+	    // Stream results back one row at a time
+	    query.on('row', (row) => {
+	      results.push(row);
+	    });`
+	    // After all data is returned, close connection and return results
+	    query.on('end', () => {
+	      done();
+	      return res.json(results);
+	    });
+		*/
+		done();
+		return res.status(200).json({success: true,message: 'inserted weight record'})
+	  });
+};
 
 
 
