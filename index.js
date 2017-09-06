@@ -55,9 +55,7 @@ app.post('/webhook/', function (req, res) {
 
 //database connection
 app.get('/db', function (request, response) {
-  
-  let pool = new pg.Pool(process.env.DATABASE_URL)
-  pool.connect(function(err, client, done) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query('SELECT * FROM test_table', function(err, result) {
       done();
       if (err)
@@ -66,7 +64,6 @@ app.get('/db', function (request, response) {
        { response.render('pages/db', {results: result.rows} ); }
     });
   });
-  pool.end();
 });
 
 
