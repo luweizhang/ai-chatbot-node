@@ -65,7 +65,7 @@ app.get('/db', function (request, response) {
 });
 
 //store the weight
-router.post('/db/weight', (req, res, next) => {
+app.post('/db/weight', (req, res, next) => {
   const results = [];
   // Grab data from http request
   // const data = {text: req.body.text, complete: false};
@@ -208,6 +208,7 @@ function genericMessageHandler(sender, message) {
 
 function weightTrackingHandler(sender, message) {
 	sendTextMessage(sender, "Got it! Your weight for today has been recorded as: " + String(162))
+	dbStoreWeight('hello');
 }
 
 function moodTrackingHandler(sender, message) {
@@ -249,14 +250,14 @@ app.listen(app.get('port'), function() {
 function dbStoreWeight(params) {
 
 	var post_data = querystring.stringify({
-      'user_id' : 'ADVANCED_OPTIMIZATIONS',
+      'user_id' : '123',
       'weight': 'json',
       'metric': 'compiled_code'
   	});
 
   	request.post(
-    'http://www.yoursite.com/formpage',
-    { json: { key: 'value' } },
+    'db/weight',
+    post_data,
     function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body)
