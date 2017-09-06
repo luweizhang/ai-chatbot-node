@@ -44,7 +44,7 @@ app.post('/webhook/', function (req, res) {
 		}
 		if (event.postback) {
 			let text = JSON.stringify(event.postback)
-			sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+			sendTextMessage(sender, "Postback received: " +text.substring(0, 200), token)
 			continue
 		}
 	}
@@ -253,25 +253,27 @@ app.listen(app.get('port'), function() {
 
 function dbStoreWeight(params) {
 
-	var post_data = querystring.stringify({
-      'user_id' : '123',
-      'weight': 123,
-      'metric': 'lbs'
-  	});
+	// Set the headers
+	var headers = {
+	    'User-Agent':       'Super Agent/0.0.1',
+	    'Content-Type':     'application/x-www-form-urlencoded'
+	}
 
-  	request.post(
-    '/db/weight',
-    {
-      'user_id' : '123',
-      'weight': 123,
-      'metric': 'lbs'
-  	},
-    function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            console.log(body)
-        }
-    }
-	);
+	// Configure the request
+	var options = {
+	    url: '/db/weight',
+	    method: 'POST',
+	    headers: headers,
+	    form: {user_id: '123' , weight: 123, metric: 'lbs'}
+	}
+
+	// Start the request
+	request(options, function (error, response, body) {
+	    if (!error && response.statusCode == 200) {
+	        // Print out the response body
+	        console.log(body)
+	    }
+	})
 }
 
 
