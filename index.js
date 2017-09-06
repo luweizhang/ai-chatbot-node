@@ -3,10 +3,23 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
+const pg = require('pg'); //postgresql
+
 const app = express()
 
-app.set('port', (process.env.PORT || 5000))
+app.get('/db', function (request, response) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query('SELECT * FROM test_table', function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { response.render('pages/db', {results: result.rows} ); }
+    });
+  });
+});
 
+app.set('port', (process.env.PORT || 5000))
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
 
@@ -154,7 +167,7 @@ function messageHandler(sender, message) {
 		moodTrackingHandler(sender, message)
 	}
 
-	else if (splitmessage.includes('hi') || splitmessage.includes('hello') || splitmessage.includes('whats up') || splitmessage.includes('whats up')) {
+	else if (splitmessage.includes('hi') || splitmessage.includes('hello') || splitmessage.includes('hey')) {
 		greetingHandler(sender, message)
 	}
 
@@ -198,7 +211,7 @@ function taskTrackingHandler(sender, message) {
 }
 
 function greetingHandler(sender, message) {
-	let possible_responses = ["Hello!","Greetings!","Hi!","Hola!"];
+	let possible_responses = ["Hello!","Greetings!","Hi!","Hola!","Hey!"];
 	let random_index = Math.floor(Math.random()*4);
 	let mymessage = possible_responses[random_index];
 	sendTextMessage(sender, mymessage);	
@@ -232,13 +245,15 @@ More features to add in the future:
 -- in addition to the web portal, also send vizualizations through the chat itself.  For example, after recording the weight, 
 -- display a graph of the weight fluctuations over the last two months.
 
+-- connect to wit ai to do general NLP (don't need to do all the work myself)
+
 */
 
 /* future vision
 -- After learning about the user, serve ads and do affiliate marketing.
 
 
-
 */
+
 
 
