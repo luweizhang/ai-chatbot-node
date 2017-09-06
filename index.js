@@ -43,9 +43,6 @@ app.post('/webhook/', function (req, res) {
 		if (event.message && event.message.text) {
 			let message = event.message.text
 			messageHandler(sender, message)
-
-			//sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
-
 		}
 		if (event.postback) {
 			let text = JSON.stringify(event.postback)
@@ -59,7 +56,7 @@ app.post('/webhook/', function (req, res) {
 //database connection
 app.get('/db', function (request, response) {
   
-  var pool = new pg.Pool()
+  let pool = new pg.Pool()
   pool.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query('SELECT * FROM test_table', function(err, result) {
       done();
@@ -69,7 +66,6 @@ app.get('/db', function (request, response) {
        { response.render('pages/db', {results: result.rows} ); }
     });
   });
-
   pool.end();
 });
 
