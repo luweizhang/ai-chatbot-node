@@ -248,7 +248,7 @@ function moodTrackingHandler(sender, message) {
 	} else if (mood > 7 && mood <= 10) {
 		message_end = "I'm glad you are feeling great today!"
 	} else {
-		sendTextMessage(send, "Please enter a mood number between 0 and 10, i.e my mood is X out of 10")
+		sendTextMessage(sender, "Please enter a mood number between 0 and 10, i.e my mood is X out of 10")
 		return
 	}
 	sendTextMessage(sender, "Got it, we have recorded your mood as: " + String(mood) + message_end)
