@@ -1,10 +1,8 @@
-var numberPattern = /\d+/g;
-console.log(numberPattern)
-console.log('I am dfdfdf pounds'.match( numberPattern ));
+let message_end
 
-
-function weightParser(message) {
-	let numberPattern = /\d+/g;
-	console.log( message.match( numberPattern ))
-	//return message.match( numberPattern )[0]
+let a = 3
+if (a > 2) {
+	message_end = "corn"
 }
+
+console.log(message_end)

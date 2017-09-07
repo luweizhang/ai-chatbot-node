@@ -1,11 +1,11 @@
 'use strict'
-const express = require('express')
-const bodyParser = require('body-parser')
-const request = require('request')
-const pg = require('pg'); //postgresql
+const express     = require('express')
+const bodyParser  = require('body-parser')
+const request     = require('request')
+const pg 	      = require('pg'); //postgresql
 const querystring = require('querystring');
 
-const app = express()
+const app         = express()
 
 //config variables
 const connectionString = process.env.DATABASE_URL // || 'postgres://localhost:5432/todo';
@@ -67,12 +67,7 @@ app.get('/db', function (request, response) {
 //store the weight
 app.post('/db/weight', (req, res, next) => {
   const results = [];
-  // Grab data from http request
-  // const data = {text: req.body.text, complete: false};
-
-  console.log(req.body);
   const data = {user_id: req.body.user_id || '123' , weight: req.body.weight || 123, metric: req.body.metric || 'lbs'};
-  console.log(data);
   // Get a Postgres client from the connection pool
   pg.connect(connectionString, (err, client, done) => {
     // Handle connection errors
@@ -84,19 +79,6 @@ app.post('/db/weight', (req, res, next) => {
     // SQL Query > Insert Data
     client.query('INSERT INTO weight (user_id, weight, metric, message_time) values($1, $2, $3, current_timestamp);',
     [data.user_id, data.weight, data.metric]);
-    /*
-    // SQL Query > Select Data
-    const query = client.query('SELECT * FROM items ORDER BY id ASC');
-    // Stream results back one row at a time
-    query.on('row', (row) => {
-      results.push(row);
-    });`
-    // After all data is returned, close connection and return results
-    query.on('end', () => {
-      done();
-      return res.json(results);
-    });
-	*/
 	done();
 	return res.status(200).json({success: true,message: 'inserted weight record'})
   });
@@ -181,7 +163,7 @@ function messageHandler(sender, message) {
 		weightTrackingHandler(sender, message)
 	} 
 
-	else if (splitmessage.includes('i') && splitmessage.includes('did')) {
+	else if ((splitmessage.includes('i') && splitmessage.includes('did')) || splitmessage.includes('task:')) {
 		taskTrackingHandler(sender, message)
 	}
 
@@ -252,11 +234,13 @@ function moodTrackingHandler(sender, message) {
 		sendTextMessage(sender, "Please enter a mood number between 0 and 10, i.e my mood is X out of 10")
 		return
 	}
-	sendTextMessage(sender, "Got it, we have recorded your mood as: " + String(mood) + message_end)
+	sendTextMessage(sender, "Got it, we have recorded your mood as: " + String(mood) + ", " + message_end)
+	dbStoreMood(sender, mood);
 }
 
 function taskTrackingHandler(sender, message) {
 	sendTextMessage(sender, "Got it! Your accomplishment for today has been recorded")
+	dbStoreTask(sender, message);
 }
 
 function greetingHandler(sender, message) {
@@ -270,7 +254,7 @@ function helpHandler(sender, message) {
 	let possible_responses = [
 	"Type \"My weight is X \" to record your weight for today",
 	"Type \"My mood is X out of 10, to record your mood for today",
-	"Type \" I did X\" to record your accomplishments for today"
+	"Type \" I did X\" or \"task: X\" to record your accomplishments for today"
 	];
 
 	let random_index = Math.floor(Math.random()*(possible_responses.length));
@@ -283,9 +267,9 @@ app.listen(app.get('port'), function() {
 })
 
 
-//db request function
+//db request functions
 function dbStoreWeight(sender, weight) {
-	console.log("attempting to post")	
+	console.log("attempting to post weight")	
 	  const data = {user_id: sender , weight: weight, metric: 'lbs'};
 	  console.log(data);
 	  // Get a Postgres client from the connection pool
@@ -303,6 +287,48 @@ function dbStoreWeight(sender, weight) {
 		return {success: true,message: 'inserted weight record'}
 	  });
 };
+
+function dbStoreMood(sender, mood) {
+	console.log("attempting to post mood")	
+	  const data = {user_id: sender , mood: mood};
+	  console.log(data);
+	  // Get a Postgres client from the connection pool
+	  pg.connect(connectionString, (err, client, done) => {
+	    // Handle connection errors
+	    if(err) {
+	      done();
+	      console.log(err);
+	      return {success: false, data: err};
+	    }
+	    // SQL Query > Insert Data
+	    client.query('INSERT INTO mood (user_id, mood, message_time) VALUES($1, $2, current_timestamp);',
+	    [data.user_id, data.mood]);
+		done();
+		return {success: true,message: 'inserted mood record'}
+	  });
+};
+
+function dbStoreTask(sender, accomp) {
+	console.log("attempting to post accomplishment")	
+	  const data = {user_id: sender , accomp: accomp};
+	  console.log(data);
+	  // Get a Postgres client from the connection pool
+	  pg.connect(connectionString, (err, client, done) => {
+	    // Handle connection errors
+	    if(err) {
+	      done();
+	      console.log(err);
+	      return {success: false, data: err};
+	    }
+	    // SQL Query > Insert Data
+	    client.query('INSERT INTO accomplishment (user_id, accomplishment, message_time) VALUES($1, $2, current_timestamp);',
+	    [data.user_id, data.accomp]);
+		done();
+		return {success: true,message: 'inserted accomplishment record'}
+	  });
+};
+
+
 
 function numberParser(message) {
 	let numberPattern = /\d+/g;
@@ -352,6 +378,9 @@ Other ideas, detect your mood.
 -- need some sort of ability to record the message context,
  to enable more complex complex conversations
  for example -> "how are you?" -> good, and you? -> good! -> "thats good to hear!"
+
+ occasionally, ai buddy will ask you some question to learn more about you! 
+ it will use this information for your benefit.
 */
 
 
