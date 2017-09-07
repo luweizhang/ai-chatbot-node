@@ -132,7 +132,7 @@ function messageHandler(sender, message) {
 		weightTrackingHandler(sender, message)
 	} 
 
-	else if ((splitmessage.includes('i') && splitmessage.includes('did')) || splitmessage.includes('task:')) {
+	else if ((splitmessage.includes('i') && splitmessage.includes('did')) || splitmessage.includes('task:') || (splitmessage[0] == 'today' && splitmessage[1] == 'i')){
 		taskTrackingHandler(sender, message)
 	}
 
