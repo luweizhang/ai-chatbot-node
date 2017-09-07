@@ -309,7 +309,9 @@ function lookForResponse(sender, message) {
 		done();
 		console.log(results)
   		if (results.length > 0) {
-			sendTextMessage(sender, results[0].response);
+			let random_index = Math.floor(Math.random()*(results.length));
+			let mymessage = results[random_index];
+			sendTextMessage(sender, mymessage.response);
 		} else {
 	    sendTextMessage(sender, "Sorry, I could not understand what you were saying...");
 	    sendTextMessage(sender, "Note: Please type \"help\" to learn how to interact with me!");
