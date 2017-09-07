@@ -154,12 +154,7 @@ function messageHandler(sender, message) {
 
 	else {
 		let response = lookForResponse(message)
-		if (response.length > 0) {
-			sendTextMessage(sender, response[0]);
-		} else {
-	    sendTextMessage(sender, "Sorry, I could not understand what you were saying...");
-	    sendTextMessage(sender, "Note: Please type \"help\" to learn how to interact with me!");
-		}
+
 	};
 }
 
@@ -311,9 +306,14 @@ function lookForResponse(message) {
     });
     // After all data is returned, close connection and return results
     query.on('end', () => {
-      done();
-      console.log(results)
-      return results;
+		done();
+		console.log(results)
+  		if (response.length > 0) {
+			sendTextMessage(sender, response[0].response);
+		} else {
+	    sendTextMessage(sender, "Sorry, I could not understand what you were saying...");
+	    sendTextMessage(sender, "Note: Please type \"help\" to learn how to interact with me!");
+		}
     });
   	});
 }
