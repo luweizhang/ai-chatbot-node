@@ -308,8 +308,8 @@ function lookForResponse(message) {
     query.on('end', () => {
 		done();
 		console.log(results)
-  		if (response.length > 0) {
-			sendTextMessage(sender, response[0].response);
+  		if (results.length > 0) {
+			sendTextMessage(sender, results[0].response);
 		} else {
 	    sendTextMessage(sender, "Sorry, I could not understand what you were saying...");
 	    sendTextMessage(sender, "Note: Please type \"help\" to learn how to interact with me!");
@@ -317,8 +317,6 @@ function lookForResponse(message) {
     });
   	});
 }
-
-
 
 function numberParser(message) {
 	let numberPattern = /\d+/g;
