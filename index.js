@@ -304,7 +304,7 @@ function dbStoreTask(sender, accomp) {
 function lookForResponse(message) {
 	const results = [];
 	pg.connect(connectionString, function(err, client, done) {
-    const query = client.query('SELECT * FROM responses WHERE message = $1;',[message]);
+    const query = client.query('SELECT response FROM responses WHERE message = $1;',[message]);
     // Stream results back one row at a time
     query.on('row', (row) => {
       results.push(row);
@@ -312,6 +312,7 @@ function lookForResponse(message) {
     // After all data is returned, close connection and return results
     query.on('end', () => {
       done();
+      console.log(results)
       return results;
     });
   	});
