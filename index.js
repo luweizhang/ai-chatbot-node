@@ -222,7 +222,7 @@ function helpHandler(sender, message) {
 	let possible_responses = [
 	"Type \"My weight is X \" to record your weight for today",
 	"Type \"My mood is X out of 10, to record your mood for today",
-	"Type \" I did X\" or \"task: X\" to record your accomplishments for today"
+	"Type \" today I X\" or \"I did X\" to record your accomplishments for today"
 	];
 
 	let random_index = Math.floor(Math.random()*(possible_responses.length));
