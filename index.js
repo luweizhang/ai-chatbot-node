@@ -153,7 +153,7 @@ function messageHandler(sender, message) {
 	}
 
 	else {
-		let response = lookForResponse(message)
+		let response = lookForResponse(sender, message)
 
 	};
 }
@@ -296,7 +296,7 @@ function dbStoreTask(sender, accomp) {
 	  });
 };
 
-function lookForResponse(message) {
+function lookForResponse(sender, message) {
 	const results = [];
 	pg.connect(connectionString, function(err, client, done) {
     const query = client.query('SELECT response FROM responses WHERE message = $1;',[message]);
