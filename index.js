@@ -8,7 +8,7 @@ const querystring = require('querystring');
 const app         = express()
 
 //config variables
-const connectionString = process.env.DATABASE_URL // || 'postgres://localhost:5432/todo';
+const connectionString = process.env.DATABASE_URL //\ || 'postgres://localhost:5432/todo';
 
 app.set('port', (process.env.PORT || 5000))
 app.use(bodyParser.urlencoded({extended: false}))
@@ -51,38 +51,7 @@ app.post('/webhook/', function (req, res) {
 	res.sendStatus(200)
 })
 
-//sample database request
-app.get('/db', function (request, response) {
-  pg.connect(connectionString, function(err, client, done) {
-    client.query('SELECT * FROM test_table', function(err, result) {
-      done();
-      if (err)
-       { console.error(err); response.send("Error " + err); }
-      else
-       { response.send({results: result.rows} ); }
-    });
-  });
-});
 
-//store the weight
-app.post('/db/weight', (req, res, next) => {
-  const results = [];
-  const data = {user_id: req.body.user_id || '123' , weight: req.body.weight || 123, metric: req.body.metric || 'lbs'};
-  // Get a Postgres client from the connection pool
-  pg.connect(connectionString, (err, client, done) => {
-    // Handle connection errors
-    if(err) {
-      done();
-      console.log(err);
-      return res.status(500).json({success: false, data: err});
-    }
-    // SQL Query > Insert Data
-    client.query('INSERT INTO weight (user_id, weight, metric, message_time) values($1, $2, $3, current_timestamp);',
-    [data.user_id, data.weight, data.metric]);
-	done();
-	return res.status(200).json({success: true,message: 'inserted weight record'})
-  });
-});
 
 const token = process.env.token
 function sendTextMessage(sender, text) {
@@ -184,9 +153,13 @@ function messageHandler(sender, message) {
 	}
 
 	else {
+		let response = lookForResponse(message)
+		if (response.length > 0) {
+			sendTextMessage(sender, response[0]);
+		} else {
 	    sendTextMessage(sender, "Sorry, I could not understand what you were saying...");
 	    sendTextMessage(sender, "Note: Please type \"help\" to learn how to interact with me!");
-	    //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200) + " Hi Janet.")
+		}
 	};
 }
 
@@ -234,7 +207,7 @@ function moodTrackingHandler(sender, message) {
 		sendTextMessage(sender, "Please enter a mood number between 0 and 10, i.e my mood is X out of 10")
 		return
 	}
-	sendTextMessage(sender, "Got it, we have recorded your mood as: " + String(mood) + ", " + message_end)
+	sendTextMessage(sender, "Got it, we have recorded your mood as: " + String(mood) + ". " + message_end)
 	dbStoreMood(sender, mood);
 }
 
@@ -328,6 +301,22 @@ function dbStoreTask(sender, accomp) {
 	  });
 };
 
+function lookForResponse(message) {
+	const results = [];
+	pg.connect(connectionString, function(err, client, done) {
+    const query = client.query('SELECT * FROM responses WHERE message = $1;',[message]);
+    // Stream results back one row at a time
+    query.on('row', (row) => {
+      results.push(row);
+    });
+    // After all data is returned, close connection and return results
+    query.on('end', () => {
+      done();
+      return results;
+    });
+  	});
+}
+
 
 
 function numberParser(message) {
@@ -355,7 +344,8 @@ More features to add in the future:
 -- connect to wit ai
 -- postgresql connection
 
--- create a web portal to display all the analytics that have been gathered
+-- create a web portal to display all the analytics that have been gathered, 
+-- or dynamically generate an html page with the graph that is needed
 
 -- in addition to the web portal, also send vizualizations through the chat itself.  For example, after recording the weight, 
 -- display a graph of the weight fluctuations over the last two months.
