@@ -136,7 +136,7 @@ function messageHandler(sender, message) {
 		taskTrackingHandler(sender, message)
 	}
 
-	else if (splitmessage.includes('feeling') || splitmessage.includes('mood')) {
+	else if (splitmessage.includes('feeling') || splitmessage.includes('mood') || splitmessage.includes('feel') ) {
 		moodTrackingHandler(sender, message)
 	}
 
@@ -153,7 +153,7 @@ function messageHandler(sender, message) {
 	}
 
 	else {
-		let response = lookForResponse(sender, message)
+		let response = lookForResponse(sender, message.toLowerCase())
 
 	};
 }
@@ -313,7 +313,7 @@ function lookForResponse(sender, message) {
 			let mymessage = results[random_index];
 			sendTextMessage(sender, mymessage.response);
 		} else {
-	    sendTextMessage(sender, "Sorry, I could not understand what you were saying...");
+	    //sendTextMessage(sender, "Sorry, I could not understand what you were saying...");
 	    sendTextMessage(sender, "Note: Please type \"help\" to learn how to interact with me!");
 		}
     });
